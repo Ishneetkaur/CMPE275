@@ -1,0 +1,187 @@
+Mar 03, 2015 1:29:51 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@5c9b027d: display name [org.springframework.context.support.ClassPathXmlApplicationContext@5c9b027d]; startup date [Tue Mar 03 13:29:51 PST 2015]; root of context hierarchy
+Mar 03, 2015 1:29:51 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [fileServiceBeans.xml]
+Mar 03, 2015 1:29:52 PM org.springframework.context.support.AbstractApplicationContext obtainFreshBeanFactory
+INFO: Bean factory for application context [org.springframework.context.support.ClassPathXmlApplicationContext@5c9b027d]: org.springframework.beans.factory.support.DefaultListableBeanFactory@7a06cf15
+Mar 03, 2015 1:29:53 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@7a06cf15: defining beans [org.springframework.aop.config.internalAutoProxyCreator,fileServiceBean,doBeforeAspect]; root of factory hierarchy
+Test Case A
+Bob trying to access Alice's File without it being shared. We get an Exception.
+-------------------------------------------------------------------------------
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : readFile
+<< Bob is trying to access alicetext1.txt >>
+Throw Exception :Alice hasn't shared alicetext1.txt
+Mar 03, 2015 1:29:53 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@726f2a: display name [org.springframework.context.support.ClassPathXmlApplicationContext@726f2a]; startup date [Tue Mar 03 13:29:53 PST 2015]; root of context hierarchy
+Mar 03, 2015 1:29:53 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [fileServiceBeans.xml]
+Mar 03, 2015 1:29:55 PM org.springframework.context.support.AbstractApplicationContext obtainFreshBeanFactory
+INFO: Bean factory for application context [org.springframework.context.support.ClassPathXmlApplicationContext@726f2a]: org.springframework.beans.factory.support.DefaultListableBeanFactory@383035a1
+Mar 03, 2015 1:29:55 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@383035a1: defining beans [org.springframework.aop.config.internalAutoProxyCreator,fileServiceBean,doBeforeAspect]; root of factory hierarchy
+Test Case B
+Bob trying to access Alice's File after it being shared. Bob can read this file.
+--------------------------------------------------------------------------------
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : shareFile
+<< Alice is trying to share alicetext1.txt with Bob >>
+Alice shared file /home/Alice/shared/alicetext1.txt with Bob
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : readFile
+<< Bob is trying to access alicetext1.txt >>
+Valid User :Bob to read alicetext1.txt
+Bob reads the file /home/Alice/shared/alicetext1.txt
+Test Completed with no exception!
+--------------------------------------------------------------------------------
+Mar 03, 2015 1:29:55 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@65716a7e: display name [org.springframework.context.support.ClassPathXmlApplicationContext@65716a7e]; startup date [Tue Mar 03 13:29:55 PST 2015]; root of context hierarchy
+Mar 03, 2015 1:29:55 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [fileServiceBeans.xml]
+Mar 03, 2015 1:29:57 PM org.springframework.context.support.AbstractApplicationContext obtainFreshBeanFactory
+INFO: Bean factory for application context [org.springframework.context.support.ClassPathXmlApplicationContext@65716a7e]: org.springframework.beans.factory.support.DefaultListableBeanFactory@7b092204
+Mar 03, 2015 1:29:57 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@7b092204: defining beans [org.springframework.aop.config.internalAutoProxyCreator,fileServiceBean,doBeforeAspect]; root of factory hierarchy
+Test Case C
+Alice shares her file with Bob. Bob shares Alice's file with Carl. Both can read it
+-----------------------------------------------------------------------------------
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : shareFile
+<< Alice is trying to share alicetext1.txt with Bob >>
+Alice shared file /home/Alice/shared/alicetext1.txt with Bob
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : readFile
+<< Bob is trying to access alicetext1.txt >>
+Valid User :Bob to read alicetext1.txt
+Bob reads the file /home/Alice/shared/alicetext1.txt
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : shareFile
+<< Bob is trying to share alicetext1.txt with Carl >>
+Bob shared file /home/Alice/shared/alicetext1.txt with Carl
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : readFile
+<< Carl is trying to access alicetext1.txt >>
+Valid User :Carl to read alicetext1.txt
+Carl reads the file /home/Alice/shared/alicetext1.txtMar 03, 2015 1:29:57 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@4a59eead: display name [org.springframework.context.support.ClassPathXmlApplicationContext@4a59eead]; startup date [Tue Mar 03 13:29:57 PST 2015]; root of context hierarchy
+Mar 03, 2015 1:29:57 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [fileServiceBeans.xml]
+
+Test Completed with no exception!
+-----------------------------------------------------------------------------------
+Mar 03, 2015 1:29:58 PM org.springframework.context.support.AbstractApplicationContext obtainFreshBeanFactory
+INFO: Bean factory for application context [org.springframework.context.support.ClassPathXmlApplicationContext@4a59eead]: org.springframework.beans.factory.support.DefaultListableBeanFactory@abb4949
+Mar 03, 2015 1:29:58 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@abb4949: defining beans [org.springframework.aop.config.internalAutoProxyCreator,fileServiceBean,doBeforeAspect]; root of factory hierarchy
+Test Case D
+Alice shares her file with Bob. Bob shares Carl's file with Alice. We get an Exception!
+---------------------------------------------------------------------------------------
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : shareFile
+<< Alice is trying to share alicetext1.txt with Bob >>
+Alice shared file /home/Alice/shared/alicetext1.txt with Bob
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : shareFile
+<< Bob is trying to share carltext1.txt with Alice >>
+Throw Exception : Not authorised for Bob to share carltext1.txt with Alice
+Mar 03, 2015 1:29:58 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@4f0dcddb: display name [org.springframework.context.support.ClassPathXmlApplicationContext@4f0dcddb]; startup date [Tue Mar 03 13:29:58 PST 2015]; root of context hierarchy
+Mar 03, 2015 1:29:58 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [fileServiceBeans.xml]
+Mar 03, 2015 1:30:00 PM org.springframework.context.support.AbstractApplicationContext obtainFreshBeanFactory
+INFO: Bean factory for application context [org.springframework.context.support.ClassPathXmlApplicationContext@4f0dcddb]: org.springframework.beans.factory.support.DefaultListableBeanFactory@334879ee
+Mar 03, 2015 1:30:00 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@334879ee: defining beans [org.springframework.aop.config.internalAutoProxyCreator,fileServiceBean,doBeforeAspect]; root of factory hierarchy
+Mar 03, 2015 1:30:00 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@3a3d350f: display name [org.springframework.context.support.ClassPathXmlApplicationContext@3a3d350f]; startup date [Tue Mar 03 13:30:00 PST 2015]; root of context hierarchy
+Mar 03, 2015 1:30:00 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [fileServiceBeans.xml]
+Test Case E
+Alice shares her file with Bob. Bob shares Alice's file with Carl. Alice unshares her file with Carl. Carl can't read this file!
+--------------------------------------------------------------------------------------------------------------------------------
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : shareFile
+<< Alice is trying to share alicetext1.txt with Bob >>
+Alice shared file /home/Alice/shared/alicetext1.txt with Bob
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : shareFile
+<< Bob is trying to share alicetext1.txt with Carl >>
+Bob shared file /home/Alice/shared/alicetext1.txt with Carl
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : unshareFile
+<< Alice is trying to unshare alicetext1.txt from Carl >>
+Alice unshared file /home/Alice/shared/alicetext1.txt with Carl
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : readFile
+<< Carl is trying to access alicetext1.txt >>
+Throw Exception : Not Authorized for Carl to read alicetext1.txt
+Mar 03, 2015 1:30:01 PM org.springframework.context.support.AbstractApplicationContext obtainFreshBeanFactory
+INFO: Bean factory for application context [org.springframework.context.support.ClassPathXmlApplicationContext@3a3d350f]: org.springframework.beans.factory.support.DefaultListableBeanFactory@429a9a6e
+Mar 03, 2015 1:30:01 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@429a9a6e: defining beans [org.springframework.aop.config.internalAutoProxyCreator,fileServiceBean,doBeforeAspect]; root of factory hierarchy
+Mar 03, 2015 1:30:01 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@f63746b: display name [org.springframework.context.support.ClassPathXmlApplicationContext@f63746b]; startup date [Tue Mar 03 13:30:01 PST 2015]; root of context hierarchy
+Mar 03, 2015 1:30:01 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [fileServiceBeans.xml]
+Test Case F
+Alice shares her file with Bob. Alice shared her file with Carl. Carl shares Alice's file with Bob. Alice unshares her file with Bob. Bob can't read this file!
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : shareFile
+<< Alice is trying to share alicetext1.txt with Bob >>
+Alice shared file /home/Alice/shared/alicetext1.txt with Bob
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : shareFile
+<< Alice is trying to share alicetext1.txt with Carl >>
+Alice shared file /home/Alice/shared/alicetext1.txt with Carl
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : shareFile
+<< Carl is trying to share alicetext1.txt with Bob >>
+Carl shared file /home/Alice/shared/alicetext1.txt with Bob
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : unshareFile
+<< Alice is trying to unshare alicetext1.txt from Bob >>
+Alice unshared file /home/Alice/shared/alicetext1.txt with Bob
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : readFile
+<< Bob is trying to access alicetext1.txt >>
+Throw Exception : Not Authorized for Bob to read alicetext1.txt
+Mar 03, 2015 1:30:02 PM org.springframework.context.support.AbstractApplicationContext obtainFreshBeanFactory
+INFO: Bean factory for application context [org.springframework.context.support.ClassPathXmlApplicationContext@f63746b]: org.springframework.beans.factory.support.DefaultListableBeanFactory@5f4badea
+Mar 03, 2015 1:30:02 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@5f4badea: defining beans [org.springframework.aop.config.internalAutoProxyCreator,fileServiceBean,doBeforeAspect]; root of factory hierarchy
+Mar 03, 2015 1:30:02 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@224fced0: display name [org.springframework.context.support.ClassPathXmlApplicationContext@224fced0]; startup date [Tue Mar 03 13:30:02 PST 2015]; root of context hierarchy
+Mar 03, 2015 1:30:02 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [fileServiceBeans.xml]
+Test Case G
+Alice shares her file with Bob. Bob shares Alice's file with Carl. Alice unshares her file with Bob. Bob shares Alice's file with Carl again. We get an exception. But Carl can still read this file.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : shareFile
+<< Alice is trying to share alicetext1.txt with Bob >>
+Alice shared file /home/Alice/shared/alicetext1.txt with Bob
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : shareFile
+<< Bob is trying to share alicetext1.txt with Carl >>
+Bob shared file /home/Alice/shared/alicetext1.txt with Carl
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : unshareFile
+<< Alice is trying to unshare alicetext1.txt from Bob >>
+Alice unshared file /home/Alice/shared/alicetext1.txt with Bob
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : readFile
+<< Carl is trying to access alicetext1.txt >>
+Valid User :Carl to read alicetext1.txt
+Carl reads the file /home/Alice/shared/alicetext1.txt
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : shareFile
+<< Bob is trying to share alicetext1.txt with Carl >>
+Throw Exception : Not authorised for Bob to share alicetext1.txt with Carl
+Mar 03, 2015 1:30:04 PM org.springframework.context.support.AbstractApplicationContext obtainFreshBeanFactory
+INFO: Bean factory for application context [org.springframework.context.support.ClassPathXmlApplicationContext@224fced0]: org.springframework.beans.factory.support.DefaultListableBeanFactory@277ec7b9
+Mar 03, 2015 1:30:04 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@277ec7b9: defining beans [org.springframework.aop.config.internalAutoProxyCreator,fileServiceBean,doBeforeAspect]; root of factory hierarchy
+Test Case H
+Bob trying to access Alice's File2 when only File1 is shared. We get an Exception!
+----------------------------------------------------------------------------------
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : shareFile
+<< Alice is trying to share alicetext1.txt with Bob >>
+Alice shared file /home/Alice/shared/alicetext1.txt with Bob
+<<<<<AspectJ>>>>> DoBefore() is running. It intercepted : readFile
+<< Bob is trying to access alicetext2.txt >>
+Throw Exception :alicetext2.txt Not Shared by Alice
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------
+Results of Test Cases:
+----------------------------------------------------------------------------------
+testA : pass
+testB : pass
+testC : pass
+testD : pass
+testE : pass
+testF : pass
+testG : pass
+testH : pass
+----------------------------------------------------------------------------------
